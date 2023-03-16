@@ -6,18 +6,16 @@
                 <p class="author-birth">Born on {{bookDetail?.birthday}} in {{bookDetail?.birthPlace}}</p>
             </div>
         </div>
-
         <div class="action">
-                <p>
-                    Sort by:
-                    <mat-button-toggle-group [(ngModel)]="sortOption" (change)="sortData()" name="fontStyle"
-                        aria-label="Font Style">
-                        <mat-button-toggle value="title">Title</mat-button-toggle>
-                        <mat-button-toggle value="date">Publish Date</mat-button-toggle>
-                    </mat-button-toggle-group>
-                </p>
+            <p>
+                Sort by:
+                <mat-button-toggle-group [(ngModel)]="sortOption" (change)="sortData()" name="fontStyle"
+                    aria-label="Font Style">
+                    <mat-button-toggle value="title">Title</mat-button-toggle>
+                    <mat-button-toggle value="date">Publish Date</mat-button-toggle>
+                </mat-button-toggle-group>
+            </p>
         </div>
-
     </section>
 
 
