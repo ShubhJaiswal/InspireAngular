@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BooksModule } from './books/books.module';
 
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -12,7 +15,9 @@ import { BooksModule } from './books/books.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BooksModule
+    BooksModule,
+    MatButtonToggleModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

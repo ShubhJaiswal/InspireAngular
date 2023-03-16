@@ -1,54 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BooksService } from 'src/app/services/books.service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Book, BookResponse, Books } from 'src/app/modal/books';
-
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.scss']
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent implements OnInit, OnDestroy {
 
-  bookDetail!: Books;
-  addBookToggle = false;
+  bookDetail!: Books; // To Store the book after receiving from api and display on UI
+  sortOption = 'title'; // Default title sort option
+  subscriptin!: Subscription; // To unsubscribe subscription
 
-  showAddBook() {
-    this.addBookToggle = !this.addBookToggle;
-  }
-  // bookForm = {
-  //   imageUrl: '',
-  //   title: '',
-  //   purchaseLink: '',
-  //   PublishDate: ''
-  // }
-  constructor(public booksService: BooksService,
-    private sanitizer: DomSanitizer) { }
+  constructor(public booksService: BooksService) { }
 
   ngOnInit(): void {
     this.getBooksList();
   }
-  
-  public getSafeUrl(url: string): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl('file://' + url);
-  }
 
+
+  //To get the item from api through service
   getBooksList() {
-    this.booksService.getBooks().subscribe((res: BookResponse) => {
-      console.table(res);
+    this.subscriptin = this.booksService.getBooks().subscribe((res: BookResponse) => {
       this.bookDetail = res.data;
     })
   }
 
-  addBook(book: Book) {
-    debugger
-    this.bookDetail.books.unshift(book);
+  //To delete a book from list
+  removeBook(book: Book) {
+    const index = this.bookDetail.books.indexOf(book);
+    if (index >= 0) {
+      this.bookDetail.books.splice(index, 1);
+    }
   }
-  sortOption = 'title';
-  onSort() {
 
-  }
+
   sortData() {
     if (this.sortOption === 'title') {
       // Sort alphabetically by title
@@ -57,5 +45,9 @@ export class BookListComponent implements OnInit {
       // Sort chronologically by publish date
       this.bookDetail.books = [...this.bookDetail.books].sort((a: any, b: any) => a.PublishDate - b.PublishDate);
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptin.unsubscribe();
   }
 }

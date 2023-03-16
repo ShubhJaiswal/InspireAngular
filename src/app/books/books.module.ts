@@ -3,18 +3,17 @@ import { CommonModule } from '@angular/common';
 import { BookListComponent } from './book-list/book-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { AddBookComponent } from './add-book/add-book.component';
-
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [
-    BookListComponent,
-    AddBookComponent
+    BookListComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MaterialModule
   ],
   exports: [BookListComponent]
 })

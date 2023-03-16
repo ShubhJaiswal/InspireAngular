@@ -1,54 +1,40 @@
 <div class="container">
-    <header class="header">
+    <section class="action-container">
         <div class="author-info">
             <div class="author-details">
                 <h2 class="author-name">Author: {{bookDetail?.author}}</h2>
                 <p class="author-birth">Born on {{bookDetail?.birthday}} in {{bookDetail?.birthPlace}}</p>
             </div>
-            <div class="sorting">
-                <button (click)="showAddBook()"> {{addBookToggle ? 'Hide' : 'Show'}} Add Book</button>
-                <div class="action">
-                    <label class="lable">
-                        Sort by
-                    </label>
-                    <select class="dropdown" [(ngModel)]="sortOption" (change)="sortData()">
-                        <option value="title">Title</option>
-                        <option value="date">Publish Date</option>
-                    </select>
-                </div>
-
-                <!-- <button (click)="sortData()">Sort</button> -->
-            </div>
         </div>
 
-    </header>
-    <!-- <div class="author-info">
-        <div class="author-details">
-            <h2 class="author-name">Author: {{bookDetail?.author}}</h2>
-            <p class="author-birth">Born on {{bookDetail?.birthday}} in {{bookDetail?.birthPlace}}</p>
+        <div class="action">
+                <p>
+                    Sort by:
+                    <mat-button-toggle-group [(ngModel)]="sortOption" (change)="sortData()" name="fontStyle"
+                        aria-label="Font Style">
+                        <mat-button-toggle value="title">Title</mat-button-toggle>
+                        <mat-button-toggle value="date">Publish Date</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </p>
         </div>
-        <div class="sorting">
 
-            <button>Add Book</button>
-            <button>Sort Books</button>
-        </div>
-    </div> -->
+    </section>
 
-    <app-add-book *ngIf="addBookToggle" (newBook)="addBook($event)"></app-add-book>
 
-    <div class="book-list" *ngIf="bookDetail">
-        <div class="book-item" *ngFor="let book of bookDetail.books">
-
-            <div class="book">
-                <div class="book-image">
-                    <img [src]="book.imageUrl" [alt]="book.title">
-                </div>
-                <div class="book-info">
-                    <h3 class="book-title"> {{book.title}} </h3>
-                    <p class="book-date">Published on {{book.PublishDate}} </p>
+    <div class="row book-list" *ngIf="bookDetail">
+        <div class="col-xs-12 col-md-6 book-item" *ngFor="let book of bookDetail.books">
+            <div class="card mb-3 book">
+                <img class="card-img-top" width="200px" [src]="book.imageUrl" alt="Book cover">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text"><small class="text-muted">Published on {{ book.PublishDate }}</small></p>
+                    <p> <a href="{{ book.purchaseLink }}" class="btn btn-primary">Buy Now</a> </p>
+                    <button mat-flat-button color="warn" class="remove-book" (click)="removeBook(book)">
+                        Delete Book
+                    </button>
                 </div>
             </div>
-
         </div>
     </div>
+
 </div>
